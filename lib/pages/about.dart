@@ -4,7 +4,6 @@ import 'package:calculatorapp/components/box.dart';
 import 'package:calculatorapp/components/button.dart';
 import 'package:calculatorapp/components/my_button.dart';
 import 'package:calculatorapp/components/my_textfield.dart';
-import 'package:calculatorapp/components/square_title.dart';
 import 'package:calculatorapp/pages/about.dart';
 import 'package:calculatorapp/pages/calculator.dart';
 import 'package:calculatorapp/pages/home.dart';

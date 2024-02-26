@@ -1,14 +1,16 @@
+import 'package:calculatorapp/api/google_signin_api.dart';
 import 'package:calculatorapp/components/box.dart';
 import 'package:calculatorapp/components/button.dart';
 import 'package:calculatorapp/components/my_button.dart';
 import 'package:calculatorapp/components/my_textfield.dart';
-import 'package:calculatorapp/components/square_title.dart';
 import 'package:calculatorapp/pages/about.dart';
 import 'package:calculatorapp/pages/calculator.dart';
 import 'package:calculatorapp/pages/home.dart';
 import 'package:calculatorapp/pages/login_page.dart';
 import 'package:calculatorapp/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -16,10 +18,22 @@ class SignUpPage extends StatelessWidget {
   final passwordController = TextEditingController();
 
   void signUserIn() {}
+
   @override
   Widget build(BuildContext context) {
+    Future signIn() async {
+    final user = await GoogleSignInApi.login();
+    if (user == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Sign in Failed')));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => HomePage(),
+      ));
+    }
+  }
     return Scaffold(
-                  appBar: AppBar(
+      appBar: AppBar(
         title: Text(
           'W E L C O M E',
           style: TextStyle(color: Colors.white),
@@ -177,9 +191,8 @@ class SignUpPage extends StatelessWidget {
                 obscureText: true,
               ),
 
+              const SizedBox(height: 10),
 
-               const SizedBox(height: 10),
-              
               //sign up button
               ElevatedButton(
                 onPressed: () {
@@ -203,8 +216,6 @@ class SignUpPage extends StatelessWidget {
                   ),
                 ),
               ),
-
-              
 
               const SizedBox(height: 50),
 
@@ -239,35 +250,24 @@ class SignUpPage extends StatelessWidget {
               const SizedBox(height: 50),
 
               //google + apple sign in buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  //google button
-                  SquareTitle(
-                      imagePath: 'lib/images/google-icon-512x512-tqc9el3r.png'),
-
-                  SizedBox(width: 25),
-
-                  //apple button
-                  SquareTitle(imagePath: 'lib/images/carve-apple-logo-pumpkin-5.png'),
-                ],
-              ),
-
-              const SizedBox(height: 50),
-
-              //a member? login now
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('a member?'),
-                  const SizedBox(width: 4),
-                  Text('Login', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),),
-                ],
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.black,
+                  minimumSize: Size(double.infinity, 50),
+                ),
+                icon: FaIcon(
+                  FontAwesomeIcons.google,
+                  color: Colors.red,
+                ),
+                label: Text('Sign Up with Google'),
+                onPressed: signIn,
               ),
             ],
           ),
         ),
       ),
     );
+    
   }
 }

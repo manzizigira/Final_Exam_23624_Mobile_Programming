@@ -2,6 +2,7 @@ import 'package:calculatorapp/components/box.dart';
 import 'package:calculatorapp/components/button.dart';
 import 'package:calculatorapp/pages/about.dart';
 import 'package:calculatorapp/pages/calculator.dart';
+import 'package:calculatorapp/pages/contact.dart';
 import 'package:calculatorapp/pages/home.dart';
 import 'package:calculatorapp/pages/login_page.dart';
 import 'package:calculatorapp/pages/sign_up.dart';
@@ -87,6 +88,17 @@ class UserHome extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => UserAbout()));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.message),
+                title: Text(
+                  'Contacts',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => MyContact()));
                 },
               ),
               ListTile(
