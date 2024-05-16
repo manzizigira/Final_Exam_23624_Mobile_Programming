@@ -3,20 +3,79 @@ import 'package:calculatorapp/components/box.dart';
 import 'package:calculatorapp/components/button.dart';
 import 'package:calculatorapp/components/my_textfield.dart';
 import 'package:calculatorapp/pages/about.dart';
+import 'package:calculatorapp/pages/admin_page.dart';
+import 'package:calculatorapp/pages/auth_page.dart';
 import 'package:calculatorapp/pages/calculator.dart';
+import 'package:calculatorapp/pages/contact.dart';
 import 'package:calculatorapp/pages/home.dart';
 import 'package:calculatorapp/pages/sign_up.dart';
 import 'package:calculatorapp/theme/theme_provider.dart';
+import 'package:calculatorapp/widget/widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:calculatorapp/components/my_button.dart';
 
-class LoginPage extends StatelessWidget {
-  final usernameController = TextEditingController();
+class LoginPage extends StatefulWidget {
+  final Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
-  void signUserIn() {}
+  void signUserIn() async {
+    try {
+      String email = emailController.text;
+      String password = passwordController.text;
+
+      if (email == 'manzienock83@gmail.com') {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => AdminPage(),
+          ),
+        );
+        return;
+      }
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => AuthPage(),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      showErrorMessage(e.code);
+    }
+  }
+
+  void showErrorMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.deepPurple,
+          title: Center(
+            child: Text(
+              message,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Future signIn() async {
@@ -33,216 +92,144 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'W E L C O M E',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.orange,
+        title: AppLogo(),
         centerTitle: true,
-        actions: [
-          Row(
-            children: [
-              MyBox(
-                color: Colors.red,
-                children: [
-                  Text(
-                    'Theme',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  MyButton(
-                    color: Colors.brown,
-                    onTap: () {
-                      Provider.of<ThemeProvider>(context, listen: false)
-                          .toggleTheme();
-                    },
-                  )
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: Container(
-          color: Colors.orange,
-          child: ListView(
-            children: [
-              DrawerHeader(
-                child: Center(
-                  child: Text(
-                    'M E N U',
-                    style: TextStyle(fontSize: 50),
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: Text(
-                  'Home',
-                  style: TextStyle(fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.calculate),
-                title: Text(
-                  'Calculator',
-                  style: TextStyle(fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Calculator()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.message),
-                title: Text(
-                  'About Me',
-                  style: TextStyle(fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => UserAbout()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text(
-                  'Login',
-                  style: TextStyle(fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginPage()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.app_registration_rounded),
-                title: Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 20),
-                ),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SignUpPage()));
-                },
-              )
-            ],
-          ),
-        ),
+        backgroundColor: Colors.orange,
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 50),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 25),
 
-              //logo
-              const Icon(
-                Icons.lock,
-                size: 100,
-              ),
+                Image.asset(
+                  'lib/images/quizpic.jpg', 
+                  width: 100, // Set width
+                  height: 100, // Set height
+                ),
 
-              const SizedBox(height: 50),
+                const SizedBox(height: 25),
 
-              //welcome back, you've been missed
-              Text(
-                'Welcome back dearest client!',
-                style: TextStyle(color: Colors.grey[700], fontSize: 16),
-              ),
+                //welcome back, you've been missed
+                Text(
+                  'Welcome back dearest client!',
+                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                ),
 
-              const SizedBox(height: 50),
+                const SizedBox(height: 25),
 
-              //username textified
-              MyTextField(
-                controller: usernameController,
-                hintText: 'Username',
-                obscureText: false,
-              ),
+                //username textified
+                MyTextField(
+                  controller: emailController,
+                  hintText: 'Email',
+                  obscureText: false,
+                ),
 
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-              //password textified
-              MyTextField(
-                controller: passwordController,
-                hintText: 'Password',
-                obscureText: true,
-              ),
+                //password textified
+                MyTextField(
+                  controller: passwordController,
+                  hintText: 'Password',
+                  obscureText: true,
+                ),
 
-              const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-              //forgot password?
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                //forgot password?
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'forgot password?,',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+                //sign in button?
+                MyButtonn(
+                  onTap: signUserIn,
+                ),
+
+                const SizedBox(height: 25),
+
+                //or continue with
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(
+                          'Or continue with',
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 25),
+
+                //google + apple sign in buttons
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    minimumSize: Size(double.infinity, 50),
+                  ),
+                  icon: FaIcon(
+                    FontAwesomeIcons.google,
+                    color: Colors.red,
+                  ),
+                  label: Text('Sign In with Google'),
+                  onPressed: signIn,
+                ),
+
+                const SizedBox(height: 25),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'forgot password?,',
-                      style: TextStyle(color: Colors.grey[600]),
+                      'Not a member?',
+                      style: TextStyle(color: Colors.grey[700]),
                     ),
+                    const SizedBox(width: 4),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: const Text(
+                        'Register now',
+                        style: TextStyle(
+                          color: Colors.brown,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
                   ],
-                ),
-              ),
-
-              const SizedBox(height: 10),
-              //sign in button?
-              MyButtonn(
-                onTap: signUserIn,
-              ),
-
-              const SizedBox(height: 50),
-
-              //or continue with
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        'Or continue with',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 50),
-
-              //google + apple sign in buttons
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
-                  onPrimary: Colors.black,
-                  minimumSize: Size(double.infinity, 50),
-                ),
-                icon: FaIcon(
-                  FontAwesomeIcons.google,
-                  color: Colors.red,
-                ),
-                label: Text('Sign In with Google'),
-                onPressed: signIn,
-              ),
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

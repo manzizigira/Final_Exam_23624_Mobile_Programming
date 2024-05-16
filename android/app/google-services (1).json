@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "449721033536",
+    "project_id": "quizzle-demo-1515b",
+    "storage_bucket": "quizzle-demo-1515b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449721033536:android:e783c888e5e883fede90a5",
+        "android_client_info": {
+          "package_name": "com.example.calculatorapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2VMkh9mMtnsuJkZG8VJ8ze2YYUF60xes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

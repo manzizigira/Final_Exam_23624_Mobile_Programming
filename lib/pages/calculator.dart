@@ -24,7 +24,7 @@ class _CalculatorState extends State<Calculator> {
       ),
       style: ElevatedButton.styleFrom(
         shape: CircleBorder(),
-        primary: btncolor,
+        backgroundColor: btncolor,
         padding: EdgeInsets.all(20),
       ),
     ),
@@ -119,7 +119,7 @@ class _CalculatorState extends State<Calculator> {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.fromLTRB(34, 20, 128, 20),
                     shape: StadiumBorder(),
-                    primary: Colors.grey[850],
+                    backgroundColor: Colors.grey[850],
                   ),
                   child: Text(
                     "0",

@@ -8,7 +8,7 @@ class Image_P extends StatefulWidget {
 }
 
 class _MyAppState extends State<Image_P> {
-  XFile? _image; // Make _image nullable
+  XFile? _image; 
 
   Future getImage(bool isCamera) async {
     XFile? image;

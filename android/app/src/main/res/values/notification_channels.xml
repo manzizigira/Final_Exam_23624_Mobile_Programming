@@ -1,0 +1,5 @@
+<resources>
+    <string name="default_notification_channel_id">step_counter_notifications</string>
+    <string name="default_notification_channel_name">Step Counter Notifications</string>
+    <string name="default_notification_channel_description">Notifications for Step Counter App</string>
+</resources>

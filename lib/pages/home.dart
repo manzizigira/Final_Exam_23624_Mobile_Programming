@@ -1,5 +1,6 @@
 import 'package:calculatorapp/pages/about.dart';
 import 'package:calculatorapp/pages/calculator.dart';
+import 'package:calculatorapp/pages/contact.dart';
 import 'package:calculatorapp/pages/home_p.dart';
 import 'package:flutter/material.dart';
 
@@ -19,12 +20,13 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _pages = [
     UserHome(),
     Calculator(),
-    UserAbout(),
+    About(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       body: _pages[_SelectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _SelectedIndex,
@@ -34,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
               icon: Icon(Icons.calculate), label: 'Calculator'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'About me'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'About me'),
         ],
       ),
     );

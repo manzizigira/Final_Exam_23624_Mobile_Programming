@@ -1,3 +1,7 @@
+import 'package:calculatorapp/pages/about.dart';
+import 'package:calculatorapp/pages/auth_page.dart';
+import 'package:calculatorapp/pages/login_or_register_oages.dart';
+import 'package:calculatorapp/widget/widget.dart';
 import 'package:fast_contacts/fast_contacts.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -7,13 +11,27 @@ class MyContact extends StatefulWidget {
   _MyContactPageState createState() => _MyContactPageState();
 }
 
+void signUserOut(BuildContext context) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(builder: (context) => LoginOrRegisterPage()),
+  );
+}
+
 class _MyContactPageState extends State<MyContact> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: AppLogo(),
         centerTitle: true,
-        title: const Text('Contacts App'),
+        backgroundColor: Colors.orange,
+        actions: [
+        IconButton(
+          onPressed: () => signUserOut(context), // Pass a callback function
+          icon: Icon(Icons.logout),
+        )
+        ],
       ),
       body: Container(
         height: double.infinity,
